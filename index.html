@@ -1,0 +1,279 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Portfolio</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<!-- write your code here -->
+<script src="https://code.createjs.com/1.0.0/createjs.min.js"></script>
+<script src="Final AD.js"></script>
+<script>
+var canvas, stage, exportRoot, anim_container, dom_overlay_container, fnStartAnimation;
+function init() {
+	canvas = document.getElementById("canvas");
+	anim_container = document.getElementById("animation_container");
+	dom_overlay_container = document.getElementById("dom_overlay_container");
+	var comp=AdobeAn.getComposition("07CC56950C78C9419CC973EAD7F7B6C2");
+	var lib=comp.getLibrary();
+	var loader = new createjs.LoadQueue(false);
+	loader.addEventListener("fileload", function(evt){handleFileLoad(evt,comp)});
+	loader.addEventListener("complete", function(evt){handleComplete(evt,comp)});
+	var lib=comp.getLibrary();
+	loader.loadManifest(lib.properties.manifest);
+}
+function handleFileLoad(evt, comp) {
+	var images=comp.getImages();	
+	if (evt && (evt.item.type == "image")) { images[evt.item.id] = evt.result; }	
+}
+function handleComplete(evt,comp) {
+	//This function is always called, irrespective of the content. You can use the variable "stage" after it is created in token create_stage.
+	var lib=comp.getLibrary();
+	var ss=comp.getSpriteSheet();
+	var queue = evt.target;
+	var ssMetadata = lib.ssMetadata;
+	for(i=0; i<ssMetadata.length; i++) {
+		ss[ssMetadata[i].name] = new createjs.SpriteSheet( {"images": [queue.getResult(ssMetadata[i].name)], "frames": ssMetadata[i].frames} )
+	}
+	exportRoot = new lib.FinalAD();
+	stage = new lib.Stage(canvas);	
+	//Registers the "tick" event listener.
+	fnStartAnimation = function() {
+		stage.addChild(exportRoot);
+		createjs.Ticker.framerate = lib.properties.fps;
+		createjs.Ticker.addEventListener("tick", stage);
+	}	    
+	//Code to support hidpi screens and responsive scaling.
+	AdobeAn.makeResponsive(false,'both',false,1,[canvas,anim_container,dom_overlay_container]);	
+	AdobeAn.compositionLoaded(lib.properties.id);
+	fnStartAnimation();
+}
+</script>
+<!-- write your code here -->
+	</head>
+	<body class="is-preload" onload="init();" style="margin:0px;">
+
+		<!-- Sidebar -->
+			<section id="sidebar">
+				<div class="inner">
+					<nav>
+						<ul>
+							<li><a href="#intro">Welcome</a></li>
+							<li><a href="#one">Projects</a></li>
+							<li><a href="#two">What we do</a></li>
+							<li><a href="#three">Get in touch</a></li>
+						</ul>
+					</nav>
+				</div>
+			</section>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Intro -->
+					<section id="intro" class="wrapper style1 fullscreen fade-up">
+						<div class="inner">
+							<h1>Adi Shah's Porfolio Page</h1>
+							<p>This is my porfolio page. I'm Adi, a Walpole High School student, and this page will provide you with my past projects in Web Design <i>2023-2024</i>.</p>
+							<ul class="actions">
+							</ul>
+						</div>
+					</section>
+
+				<!-- One -->
+					<section id="one" class="wrapper style2 spotlights">
+						<section>
+							<a href="#" class="image"><img src="images/carImage.PNG" alt="" data-position="center center" /></a>
+							<div class="content">
+								<div class="inner">
+									<h2>Car Project</h2>
+									<p>I have always been fond of cars and find them quite fascinating. Dodge and Ferrari hold a special place in my heart among all the brands. Dodge cars' raw power and sleek design have always caught my attention, especially the Dodge Challenger and Charger. On the other hand, Ferrari's elegant and futuristic design and unmatched speed and performance make it a dream car for many car enthusiasts, including myself. I love how these two brands have evolved over the years and continue to push the boundaries of the automotive industry with their cutting-edge technology and exceptional craftsmanship.</p>
+									<ul class="actions">
+										<li><a href="generic.html" class="button">Learn more</a></li>
+									</ul>
+								</div>
+							</div>
+						</section>
+						<section>
+							<a href="#" class="image"><img src="images/creativeWeb.PNG" alt="" data-position="top center" /></a>
+							<div class="content">
+								<div class="inner">
+									<h2>Tech gadgets Project</h2>
+									<p>Access to information about technological gadgets is important in today's world. As a tech enthusiast, I have acquired knowledge and insights about various tech products and enjoy helping others make the most of their gadgets. I believe in sharing information to empower people to stay connected, informed, and productive in today's fast-paced world.</p>
+									<ul class="actions">
+										<li><a href="generic.html" class="button">Learn more</a></li>
+									</ul>
+								</div>
+							</div>
+						</section>
+						<section>
+							<div id="animation_container" style="background-color:rgba(255, 255, 255, 1.00); width:500px; height:720px">
+								<canvas id="canvas" width="500" height="720" style="position: absolute; display: block; background-color:rgba(255, 255, 255, 1.00);"></canvas>
+								<div id="dom_overlay_container" style="pointer-events:none; overflow:hidden; width:500px; height:720px; position: absolute; left: 0px; top: 0px; display: block;">
+								</div>
+							</div>
+							<div class="content">
+								<div class="inner">
+									<h2>Tech AD</h2>
+									<p>Hope you feel attracted!!!</p>
+									<ul class="actions">
+										<li><a href="generic.html" class="button">Learn more</a></li>
+									</ul>
+								</div>
+							</div>
+						</section>
+						<section>
+							<a href="#" class="image"><img src="images/WHSPage.PNG" alt="" data-position="25% 25%" /></a>
+							<div class="content">
+								<div class="inner">
+									<h2>WHS STEM Academy Page</h2>
+									<p>I spent some time reworking the Walpole High School STEM Academy page. Although the page was good, I improved even further to make it perfect for future use. So, I invested my time and effort into revamping the page. I changed the layout, updated the content, and added new features to make the page more informative and user-friendly. Overall, I am happy with the result, and the updated page will benefit students, parents, and teachers interested in the STEM Academy.</p>
+									<ul class="actions">
+										<li><a href="generic.html" class="button">Learn more</a></li>
+									</ul>
+								</div>
+							</div>
+						</section>
+					</section>
+
+				<!-- Two -->
+					<section id="two" class="wrapper style3 fade-up">
+						<div class="inner">
+							<h2>What I Do</h2>
+							<p>Here are my favorite things to do when I get a chance.</p>
+							<div class="features">
+								<section>
+									<span class="icon solid major fa-code"></span>
+									<h3>Programming in Python</h3>
+									<img src="images/python.png" height="200">
+								</section>
+								<section>
+									<span class="icon solid major fa-lock"></span>
+									<h3>Watch Football Games</h3>
+									<ul>
+										<li>enjoy watching the New England Patriots in action</li>
+										<li>engaging in fantasy football with my friends</li>
+									</ul>
+								</section>
+								<section>
+									<span class="icon solid major fa-cog"></span>
+									<h3>Travel Nationally & Internationally</h3>
+									<ul>
+										<li>Cruise (Odyssey of the Seaes - Royalm Caribbean)</li>
+										<li>India</li>
+										<li>Michigan</li>
+										<li>Pennsylvania</li>
+									</ul>
+								</section>
+								<section>
+									<span class="icon solid major fa-desktop"></span>
+									<h3>Play Video Games</h3>
+									<ul>
+										<li>Madden 23</li>
+										<li>Fifa 20</li>
+										<li>Forza Horizon 3</li>
+									</ul>
+								</section>
+								<section>
+									<span class="icon solid major fa-link"></span>
+									<h3>Tennis</h3>
+									<ul>
+										<li>Play for the Walople Timberwolves</li>
+									</ul>
+								</section>
+								<section>
+									<span class="icon major fa-gem"></span>
+									<h3>Monopoly Night With Friends</h3>
+									<img src="images/monopoly.png" width="200">
+								</section>
+							</div>
+							<ul class="actions">
+								<li><a href="generic.html" class="button">Learn more</a></li>
+							</ul>
+						</div>
+					</section>
+
+				<!-- Three -->
+					<section id="three" class="wrapper style1 fade-up">
+						<div class="inner">
+							<h2>Get in touch</h2>							
+							<div class="split style1">
+								<section>
+									<form method="post" action="#">
+										<div class="fields">
+											<div class="field half">
+												<label for="name">Name</label>
+												<input type="text" name="name" id="name" />
+											</div>
+											<div class="field half">
+												<label for="email">Email</label>
+												<input type="text" name="email" id="email" />
+											</div>
+											<div class="field">
+												<label for="message">Message</label>
+												<textarea name="message" id="message" rows="5"></textarea>
+											</div>
+										</div>
+										<ul class="actions">
+											<li><a href="" class="button submit">Send Message</a></li>
+										</ul>
+									</form>
+								</section>
+								<section>
+									<ul class="contact">
+										<li>
+											<h3>Address</h3>
+											<span>101 Abhiram Turnpike<br />
+										</li>
+										<li>
+											<h3>Email</h3>
+											<a href="#">email@gmail.com</a>
+										</li>
+										<li>
+											<h3>Phone</h3>
+											<span>(xxx) xxx-xxxx</span>
+										</li>
+										<li>
+											<h3>Social</h3>
+											<ul class="icons">
+												<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+												<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
+												<li><a href="#" class="icon brands fa-github"><span class="label">GitHub</span></a></li>
+												<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
+												<li><a href="#" class="icon brands fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
+											</ul>
+										</li>
+									</ul>
+								</section>
+							</div>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper style1-alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
